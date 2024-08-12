@@ -1,0 +1,20 @@
+re-render:
+
+1. set state(class)/ useState(hook)
+2. props: Quan hệ cha con
+
+<Provider store={store}> // Component Provider Redux đã bọc Component <App/> => Redux là cha React là con
+    <React.StrictMode>
+        <App />
+    </React.StrictMode>,
+</Provider>,
+
+
+mapStateToProps:
+- mapState của Redux(Redux store) + props react (kết nối)
+
+mapDispatchToProps:
+- map Dispatch (redux) to props react
+
+connect:
+- higher order component
