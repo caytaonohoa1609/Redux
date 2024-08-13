@@ -6,8 +6,7 @@ import {
   decreaseCounter,
 } from "./action/actions"
 import { useSelector, useDispatch } from 'react-redux';
-import axios from 'axios';
-import { useEffect } from 'react';
+
 import Home from './components/Home'
 
 function App(props) {
@@ -30,15 +29,7 @@ function App(props) {
     // })
   }
 
-  const fetchAllUser = async () => {
-    const res = await axios.get("http://localhost:8080/users/all");
-    const data = res && res.data ? res.data : []
-    console.log(">>> check data axios: ", data)
-  }
-
-  useEffect(() => {
-    fetchAllUser();
-  }, [])
+  
 
 
   return (
