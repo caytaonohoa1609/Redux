@@ -54,7 +54,7 @@ const handleUserGetAPI = async (req, res) => {
     setTimeout(async () => {
         let userList = await userService.getUserList();
         return res.status(200).json(userList);
-    }, 1000)
+    }, 100)
 
 }
 
