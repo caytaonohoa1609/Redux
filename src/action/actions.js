@@ -1,4 +1,8 @@
-import { INCREMENT, DECREMENT, FETCH_USER_REQUEST, FETCH_USER_SUCCESS, FETCH_USER_ERROR } from './types';
+import { 
+    INCREMENT, DECREMENT, 
+    FETCH_USER_REQUEST, FETCH_USER_SUCCESS, FETCH_USER_ERROR,
+    CREATE_USER_REQUEST, CREATE_USER_SUCCESS, CREATE_USER_ERROR 
+} from './types';
 import axios from 'axios';
 
 
@@ -26,6 +30,25 @@ export const decreaseCounter = () => {
 // - 1. Fetching data
 // - 2. doing (Trạng thái API đang lấy dữ liệu)
 // - 3. finish 
+
+
+export const fetchUsersRequest = () => {
+    return {
+        type: FETCH_USER_REQUEST
+    }
+}
+export const fetchUsersSuccess = (data) => {
+    return {
+        type: FETCH_USER_SUCCESS,
+        dataUsers: data
+    }
+}
+export const fetchUsersError = () => {
+    return {
+        type: FETCH_USER_ERROR
+    }
+}
+
 export const fetchAllUsers = () => {
 
     return async (dispatch, getState) => {
@@ -43,20 +66,35 @@ export const fetchAllUsers = () => {
     }
 }
 
-export const fetchUsersRequest = () => {
+export const createUsersRequest = () => {
     return {
-        type: FETCH_USER_REQUEST
+        type: CREATE_USER_REQUEST
     }
 }
-export const fetchUsersSuccess = (data) => {
+export const createUsersSuccess = (data) => {
     return {
-        type: FETCH_USER_SUCCESS,
-        dataUsers: data
+        type: CREATE_USER_SUCCESS
     }
 }
-export const fetchUsersError = () => {
+export const createUsersError = () => {
     return {
-        type: FETCH_USER_ERROR
+        type: CREATE_USER_ERROR
+    }
+}
+
+export const createNewUserRedux = (email, password, username) => {
+    return async (dispatch, getState) => {
+        dispatch(createUsersRequest());
+        try{
+            let res = await axios.post("http://localhost:8080/users/create", {email, password, username})
+            if(res && res.data.errCode === 0) {
+                dispatch(createUsersSuccess());
+                dispatch(fetchAllUsers());
+            }
+        } catch(error) {
+            console.log(error);
+            dispatch(fetchUsersError());
+        }
     }
 }
 
