@@ -3,7 +3,7 @@ import Table from 'react-bootstrap/Table';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchAllUsers } from '../action/actions';
+import { fetchAllUsers, deleteUserRedux } from '../action/actions';
 
 const TableUser = (props) => {
 
@@ -27,7 +27,7 @@ const TableUser = (props) => {
       }, [])
 
     const handleDeleteUser = (user) => {
-        console.log(user)
+        dispatch(deleteUserRedux(user.id))
     }
 
     if(isError === false && isLoading === true) {
@@ -44,10 +44,9 @@ const TableUser = (props) => {
 
                         </tr>
                     </thead>
-                    <tbody>
-                        <div>Loading data...</div>
-                    </tbody>
+                        
                 </Table>
+                <div>Loading data...</div>
             </Container>
         )
     }
@@ -105,10 +104,9 @@ const TableUser = (props) => {
 
                         </tr>
                     </thead>
-                    <tbody>
-                        <div>Something wrongs, please try again...</div>
-                    </tbody>
+                        
                 </Table>
+                <div>Something wrongs, please try again...</div>    
             </Container>
         )
     }

@@ -1,7 +1,8 @@
 import { 
     INCREMENT, DECREMENT, 
     FETCH_USER_REQUEST, FETCH_USER_SUCCESS, FETCH_USER_ERROR,
-    CREATE_USER_REQUEST, CREATE_USER_SUCCESS, CREATE_USER_ERROR 
+    CREATE_USER_REQUEST, CREATE_USER_SUCCESS, CREATE_USER_ERROR ,
+    DELETE_USER_REQUEST, DELETE_USER_SUCCESS, DELETE_USER_ERROR
 } from './types';
 import axios from 'axios';
 
@@ -94,6 +95,36 @@ export const createNewUserRedux = (email, password, username) => {
         } catch(error) {
             console.log(error);
             dispatch(fetchUsersError());
+        }
+    }
+}
+
+export const deleteUsersRequest = () => {
+    return {
+        type: DELETE_USER_REQUEST
+    }
+}
+export const deleteUsersSuccess = (id) => {
+    return {
+        type: DELETE_USER_SUCCESS
+    }
+}
+export const deleteUsersError = () => {
+    return {
+        type: DELETE_USER_ERROR
+    }
+}
+
+export const deleteUserRedux = (id) => {
+    return async (dispatch, getState) => {
+        try{
+            let res = await axios.post(`http://localhost:8080/users/delete/${id}`)
+            if (res && res.data.errCode === 0) {
+                dispatch(deleteUsersSuccess());
+                dispatch(fetchAllUsers());
+            }
+        } catch (error) {
+            console.log(error)
         }
     }
 }
